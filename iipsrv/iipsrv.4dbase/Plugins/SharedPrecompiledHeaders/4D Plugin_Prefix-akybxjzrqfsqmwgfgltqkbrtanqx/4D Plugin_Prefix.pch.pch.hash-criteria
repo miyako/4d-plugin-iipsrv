@@ -1,0 +1,23 @@
+-x
+objective-c++
+-arch
+i386
+-stdlib=libc++
+-fpascal-strings
+-Os
+-fno-common
+-DOBJC_OLD_DISPATCH_PROTOTYPES=0
+-isysroot
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+-fasm-blocks
+-mmacosx-version-min=10.9
+-fvisibility=hidden
+-fvisibility-inlines-hidden
+-Iinclude
+-Iinclude/libjson
+-I/Users/miyako/Desktop/iipsrv/iipsrv.4dbase/Plugins/Default/include
+-F/Users/miyako/Desktop/iipsrv/iipsrv.4dbase/Plugins/Default
+i386-apple-darwin15.6.0
+"4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.42.1)"
+SDK_PRODUCT_BUILD_VERSION=13F26
+13F26

@@ -105,7 +105,7 @@ Case of
 
 ```
 If ($key="")
-	$data:=IIPImage Server 
-	WEB SEND RAW DATA($data)
+  $data:=IIPImage Server 
+  WEB SEND RAW DATA($data)
 End if
 ```

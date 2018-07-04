@@ -157,3 +157,12 @@ WEB SEND BLOB($data;"image/jpeg")
 ページ表示と同時にレコードがデータベースに追加されていることに注目できます。
 
 <img width="600" alt="2018-07-04 12 30 28" src="https://user-images.githubusercontent.com/1725068/42255341-3056ed3c-7f86-11e8-8ef0-1896bfa4a5a5.png">
+
+ビューア上で画像をズームしたり，動かしたりしてみてください。
+
+動的にタイル画像が生成され，ブラウザに表示されてゆきます。
+
+<img width="600" src="https://user-images.githubusercontent.com/1725068/42255391-6dd08c18-7f86-11e8-85a3-907e04d16813.png" />
+
+
+

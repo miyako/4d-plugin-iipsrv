@@ -52,7 +52,7 @@ IIPImage SET OPTION (JSON Stringify($option))
 C_TEXT(${1})
 
 Case of 
-	: ($1="/fcgi-bin/iipsrv.fcgi?@")
+: ($1="/fcgi-bin/iipsrv.fcgi?@")
 
   C_BLOB($data)
   $data:=IIPImage Server 
@@ -75,4 +75,37 @@ IIP_OPT_FILESYSTEM_PREFIX;Get 4D folder(HTML Root folder);\
 IIP_OPT_MAX_IMAGE_CACHE_SIZE;0)
 
 IIPImage SET OPTION (JSON Stringify($option))
+```
+
+``On Web Connection``は，いくつかのステップにわけてコードを記述することになります。
+
+はじめに，受信したリクエストに対応するキーをプラグインに計算させます。
+
+```
+C_TEXT(${1})
+
+Case of 
+: ($1="/fcgi-bin/iipsrv.fcgi?@")
+
+  C_TEXT($key)
+  $key:=IIPImage Get key 
+  
+ End case 
+```
+
+キーは，タイル画像を特定するためのIDみたいなものです。タイル画像をキャッシュから返すことになるiiifコマンドは``FIF``, ``IIIF``など，いくつか存在しますが，最終的には``CVT``または``JTL``の処理にリダイレクトされるため，キーは下記いずれかのパターンとなります。
+
+``JTL:resolution:tile:xangle:yangle:layers:compression``
+
+または
+
+``CVT:resolution:xangle:yangle:layers:left:top:width:height``
+
+キーに空が文字が返されるのは，画像以外のレスポンスが予期される場合です。そのまま，かんたんモードで処理を終えてください。
+
+```
+If ($key="")
+	$data:=IIPImage Server 
+	WEB SEND RAW DATA($data)
+End if
 ```

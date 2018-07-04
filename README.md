@@ -207,7 +207,7 @@ Parameter|Type|Description
 ------------|------------|----
 option|TEXT|``JSON``
 
-下記のオプションを設定します（オリジナルの環境変数に対応）。
+下記のオプションを設定します（説明はオリジナルの[環境変数](http://iipimage.sourceforge.net/documentation/server/)を参照してください）。
 
 **注記**: 効果のないものもあります。
 

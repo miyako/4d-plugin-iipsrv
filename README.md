@@ -109,3 +109,26 @@ If ($key="")
   WEB SEND RAW DATA($data)
 End if
 ```
+
+空ではない文字列が返された場合，データベースをクエリして，そのキーに対応する画像がないか，探します。再利用できる画像があれば，そのまま``WEB SEND BLOB``で返して終了です。
+
+```
+ARRAY TEXT($names;2)
+ARRAY TEXT($values;2)
+
+$names{1}:="Last-Modified"
+$names{2}:="Cache-Control"
+$values{1}:=String(Current date;Date RFC 1123;Current time)
+$values{2}:="max-age=86400"
+
+QUERY([IMAGES];[IMAGES]key=$key)
+
+If (Is record loaded([IMAGES]))
+					
+  C_BLOB($data)
+  PICTURE TO BLOB([IMAGES]data;$data;"image/jpeg")
+  WEB SEND BLOB($data;"image/jpeg")
+
+End if
+```
+

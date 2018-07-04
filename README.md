@@ -209,7 +209,7 @@ option|TEXT|``JSON``
 
 下記のオプションを設定します（説明はオリジナルの[環境変数](http://iipimage.sourceforge.net/documentation/server/)を参照してください）。
 
-**注記**: ``LIBMEMCACHED``は設定しても影響がありません。。
+**注記**: ``LIBMEMCACHED``は設定しても影響がありません。
 
 ファイルパスはシステム形式で渡してください。内部的にPOSIXに変換されます。
 

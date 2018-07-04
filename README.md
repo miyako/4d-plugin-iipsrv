@@ -143,3 +143,11 @@ BLOB TO PICTURE($data;[IMAGES]data;"image/jpeg")
 SAVE RECORD([IMAGES])
 WEB SEND BLOB($data;"image/jpeg")
 ```
+
+### Examples
+
+データベースを起動すると，ローカルホストでWebサーバーを起動し，``http://127.0.0.1/gallery.html```ページが開かれます。
+
+1番と3番の画像はTIFF，2番はJPEG2000です。
+
+タイル画像：http://digitalnagasaki.hatenablog.com/entry/2016/04/21/214423

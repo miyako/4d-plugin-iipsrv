@@ -155,3 +155,5 @@ WEB SEND BLOB($data;"image/jpeg")
 <img src="https://user-images.githubusercontent.com/1725068/42255231-ac8e6728-7f85-11e8-9734-78d749a2d7ec.png" width="600"/>
 
 ページ表示と同時にレコードがデータベースに追加されていることに注目できます。
+
+<img width="600" alt="2018-07-04 12 30 28" src="https://user-images.githubusercontent.com/1725068/42255341-3056ed3c-7f86-11e8-8ef0-1896bfa4a5a5.png">

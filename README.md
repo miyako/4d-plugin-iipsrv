@@ -132,3 +132,14 @@ If (Is record loaded([IMAGES]))
 End if
 ```
 
+再利用できる画像がなければ，改めてプラグインをコールし，返された画像をデータベースに保存すると同時にレスポンスを返して終了です。
+
+```
+C_BLOB($data)
+$data:=IIPImage Get image 
+CREATE RECORD([IMAGES])
+[IMAGES]key:=$key
+BLOB TO PICTURE($data;[IMAGES]data;"image/jpeg")
+SAVE RECORD([IMAGES])
+WEB SEND BLOB($data;"image/jpeg")
+```

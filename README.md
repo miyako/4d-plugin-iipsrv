@@ -152,4 +152,4 @@ WEB SEND BLOB($data;"image/jpeg")
 
 タイル画像：http://digitalnagasaki.hatenablog.com/entry/2016/04/21/214423
 
-<img src="https://user-images.githubusercontent.com/1725068/42255231-ac8e6728-7f85-11e8-9734-78d749a2d7ec.png" width="800"/>
+<img src="https://user-images.githubusercontent.com/1725068/42255231-ac8e6728-7f85-11e8-9734-78d749a2d7ec.png" width="600"/>

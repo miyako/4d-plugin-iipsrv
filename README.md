@@ -151,3 +151,5 @@ WEB SEND BLOB($data;"image/jpeg")
 1番と3番の画像はTIFF，2番はJPEG2000です。
 
 タイル画像：http://digitalnagasaki.hatenablog.com/entry/2016/04/21/214423
+
+![2018-07-04 12 26 30](https://user-images.githubusercontent.com/1725068/42255231-ac8e6728-7f85-11e8-9734-78d749a2d7ec.png)

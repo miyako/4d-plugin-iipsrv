@@ -41,7 +41,6 @@ IIPImage Serverが持つ簡易キャッシュ（ハッシュテーブル）に�
 ```
 $option:=New object(\
 IIP_OPT_FILESYSTEM_PREFIX;Get 4D folder(HTML Root folder);\
-IIP_OPT_LOGFILE;Get 4D folder(Logs folder)+"iipsrv.log";\
 IIP_OPT_MAX_IMAGE_CACHE_SIZE;10000)
 
 IIPImage SET OPTION (JSON Stringify($option))
@@ -57,3 +56,14 @@ WEB SEND RAW DATA($data)
 
 プラグインは内部的に``WEB GET HTTP HEADER``をコールして``X-URL``から``QUERY_STRING``を取り出し，リクエストの内容に応じた画像（JPEG）・JSON・XML・HTML・テキスト（エラーメッセージなど）を返します。画像ファイルはイメージキャッシュ（ファイル名と日付の管理）とタイルキャッシュ（再利用できるタイル画像）に追加されてゆきます。
 
+* 本格モード
+
+かんたんモードと同じように，ピラミッド型の画像ファイルが保存されているディレクトリに対するパスを指定します。データベースでタイル画像を管理するので，キャッシュサイズは0で構いません。
+
+```
+$option:=New object(\
+IIP_OPT_FILESYSTEM_PREFIX;Get 4D folder(HTML Root folder);\
+IIP_OPT_MAX_IMAGE_CACHE_SIZE;0)
+
+IIPImage SET OPTION (JSON Stringify($option))
+```

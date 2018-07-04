@@ -49,10 +49,19 @@ IIPImage SET OPTION (JSON Stringify($option))
 あとは，``On Web Connection``に下記のコマンドを追加するだけです。
 
 ```
-C_BLOB($data)
-$data:=IIPImage Server 
-WEB SEND RAW DATA($data)
+C_TEXT(${1})
+
+Case of 
+	: ($1="/fcgi-bin/iipsrv.fcgi?@")
+
+  C_BLOB($data)
+  $data:=IIPImage Server 
+  WEB SEND RAW DATA($data)
+  
+ End case 
 ```
+
+**注記**: URL（上記の例では``/fcgi-bin/iipsrv.fcgi?``）はクライアント側，つまりビューアソフトに依存します。
 
 プラグインは内部的に``WEB GET HTTP HEADER``をコールして``X-URL``から``QUERY_STRING``を取り出し，リクエストの内容に応じた画像（JPEG）・JSON・XML・HTML・テキスト（エラーメッセージなど）を返します。画像ファイルはイメージキャッシュ（ファイル名と日付の管理）とタイルキャッシュ（再利用できるタイル画像）に追加されてゆきます。
 

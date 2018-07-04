@@ -164,5 +164,5 @@ WEB SEND BLOB($data;"image/jpeg")
 
 <img width="600" src="https://user-images.githubusercontent.com/1725068/42255391-6dd08c18-7f86-11e8-85a3-907e04d16813.png" />
 
-
+作成してタイル画像は，データベースのピクチャフィールドに保存されてゆくので，二度目以降は表示が速くなります。特にJPEG2000はTIFFよりも処理に時間がかかるので，その差が顕著です。なお，データベースに保存されたタイル画像は，``DEBUG``メソッドで確認することができます。
 

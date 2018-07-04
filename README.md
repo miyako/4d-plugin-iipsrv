@@ -5,8 +5,6 @@ IIPImage server for 4D
 
 4Dで[International Image Interoperability Framework (iiif)](http://iiif.io)サーバーを構築するためのプラグインです。
 
-4Dで[International Image Interoperability Framework (iiif)](http://iiif.io)サーバーを構築するためのプラグインです。
-
 [IIPImage Server](http://iipimage.sourceforge.net)がベースになっています。
 
 * APIバージョンについて

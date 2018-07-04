@@ -176,3 +176,62 @@ WEB SEND BLOB($data;"image/jpeg")
 
 * ``Memcached``サポートは``disabled``されています。
 
+## Platform
+
+| carbon | cocoa | win32 | win64 |
+|:------:|:-----:|:---------:|:---------:|
+|<img src="https://cloud.githubusercontent.com/assets/1725068/22371562/1b091f0a-e4db-11e6-8458-8653954a7cce.png" width="24" height="24" />|<img src="https://cloud.githubusercontent.com/assets/1725068/22371562/1b091f0a-e4db-11e6-8458-8653954a7cce.png" width="24" height="24" />|<img src="https://cloud.githubusercontent.com/assets/1725068/22371562/1b091f0a-e4db-11e6-8458-8653954a7cce.png" width="24" height="24" />|<img src="https://cloud.githubusercontent.com/assets/1725068/22371562/1b091f0a-e4db-11e6-8458-8653954a7cce.png" width="24" height="24" />|
+
+### Version
+
+<img src="https://cloud.githubusercontent.com/assets/1725068/18940649/21945000-8645-11e6-86ed-4a0f800e5a73.png" width="32" height="32" /> <img src="https://cloud.githubusercontent.com/assets/1725068/18940648/2192ddba-8645-11e6-864d-6d5692d55717.png" width="32" height="32" /> <img src="https://user-images.githubusercontent.com/1725068/41266195-ddf767b2-6e30-11e8-9d6b-2adf6a9f57a5.png" width="32" height="32" />
+
+## Syntax
+
+```
+cacheInfo:=IIPImage Get cache info 
+```
+
+Parameter|Type|Description
+------------|------------|----
+cacheInfo|TEXT|``JSON``
+
+キャッシュの情報を返します。
+
+```
+IIPImage SET OPTION (option)
+option:=IIPImage Get option
+```
+
+Parameter|Type|Description
+------------|------------|----
+option|TEXT|``JSON``
+
+下記のオプションを設定します（オリジナルの環境変数に対応）。
+
+**注記**: 効果のないものもあります。
+
+ファイルパスはシステム形式で渡してください。内部的にPOSIXに変換されます。
+
+```
+IIP_OPT_WATERMARK_PROBABILITY
+IIP_OPT_WATERMARK_OPACITY
+IIP_OPT_WATERMARK
+IIP_OPT_VERBOSITY
+IIP_OPT_URI_MAP
+IIP_OPT_MAX_LAYERS
+IIP_OPT_MAX_IMAGE_CACHE_SIZE
+IIP_OPT_MAX_CVT
+IIP_OPT_LOGFILE
+IIP_OPT_LIBMEMCACHED_TIMEOUT
+IIP_OPT_LIBMEMCACHED_SERVERS
+IIP_OPT_JPEG_QUALITY
+IIP_OPT_INTERPOLATION
+IIP_OPT_FILESYSTEM_PREFIX
+IIP_OPT_FILENAME_PATTERN
+IIP_OPT_EMBED_ICC
+IIP_OPT_CORS
+IIP_OPT_CACHE_CONTROL
+IIP_OPT_BASE_URL
+IIP_OPT_ALLOW_UPSCALING
+```

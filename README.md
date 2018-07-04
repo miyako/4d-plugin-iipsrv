@@ -28,3 +28,29 @@ http://iipimage.sourceforge.net/documentation/images/
 * TIFFからJP2の変換について
 
 Macのプレビューでピラミッド型TIFFをJP2形式に書き出すと，『OpenJPEGが認識できない色空間です』エラーが返されるようです。ToyViewerなどの専用アプリであれば大丈夫です。なお，OpenJPEGはプリエンプティブモード（スレッドセーフ）に対応していないので，プラグイン側で呼び出しをミューテックス管理しています。つまり，プリエンプティブモードのWebプロセスでも安全に使用することができます。
+
+### How to
+
+プラグインは，**かんたんモード**または**本格モード**のどちらかの方法で使用することができます。前者はデータベースに依存せず，単独で動作を確認することができるものです。後者はデータベースを画像ファイルのキャッシュサーバーとして使用することを想定したものです。
+
+* かんたんモード
+
+IIPImage Serverが持つ簡易キャッシュ（ハッシュテーブル）に画像が蓄えられます。
+はじめに，ピラミッド型の画像ファイルが保存されているディレクトリに対するパスとキャッシュサイズを設定します。パスがWebフォルダー内にある必要はありません。キャッシュサイズはMB単位の実数です。
+
+```
+$option:=New object(\
+IIP_OPT_FILESYSTEM_PREFIX;Get 4D folder(HTML Root folder);\
+IIP_OPT_LOGFILE;Get 4D folder(Logs folder)+"iipsrv.log";\
+IIP_OPT_MAX_IMAGE_CACHE_SIZE;10000)
+
+IIPImage SET OPTION (JSON Stringify($option))
+```
+
+あとは，``On Web Connection``に下記のコマンドを追加するだけです。
+
+```
+C_BLOB($data)
+$data:=IIPImage Server 
+WEB SEND RAW DATA($data)
+```

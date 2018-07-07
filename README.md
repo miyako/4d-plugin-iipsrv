@@ -238,7 +238,7 @@ IIP_OPT_ALLOW_UPSCALING
 
 ### To do
 
-* support unicode paths on windows (``_wfpen``)
+* support unicode paths on windows (``_wfopen``)
 
 * return empty identifer if ``key_only`` and a new image is available (file was updated)
 

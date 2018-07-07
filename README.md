@@ -235,3 +235,13 @@ IIP_OPT_CACHE_CONTROL
 IIP_OPT_BASE_URL
 IIP_OPT_ALLOW_UPSCALING
 ```
+
+### To do
+
+* support unicode paths on windows (``_wfpen``)
+
+* return empty identifer if ``key_only`` and a new image is available (file was updated)
+
+### Other
+
+``jpeg-turbo`` is used on Windows. ``libjpeg-9c`` is used on Mac.

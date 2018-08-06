@@ -244,4 +244,4 @@ IIP_OPT_ALLOW_UPSCALING
 
 ### Other
 
-``jpeg-turbo`` is used on Windows. ``libjpeg-9c`` is used on Mac.
+``jpeg-turbo`` is used on ~~Windows~~ both platforms. ~~``libjpeg-9c`` is used on Mac.~~ 

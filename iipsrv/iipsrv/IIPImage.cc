@@ -23,7 +23,10 @@
 
 #include "IIPImage.h"
 
+#if _MSC_VER
+#else
 #define HAVE_GLOB_H 1
+#endif
 
 #ifdef HAVE_GLOB_H
 #include <glob.h>

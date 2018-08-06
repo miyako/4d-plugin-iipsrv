@@ -60,6 +60,24 @@ namespace iip
 	std::mutex openJPEGMutex;
 }
 
+// If necessary, define missing setenv and unsetenv functions
+#if VERSIONWIN
+static void setenv(char *n, char *v, int x) {
+	char buf[256];
+	snprintf(buf, sizeof(buf), "%s=%s", n, v);
+	putenv(buf);
+}
+static void unsetenv(char *env_name) {
+	extern char **environ;
+	char **cc;
+	int l;
+	l = strlen(env_name);
+	for (cc = environ; *cc != NULL; cc++) {
+		if (strncmp(env_name, *cc, l) == 0 && ((*cc)[l] == '=' || (*cc)[l] == '\0')) break;
+	} for (; *cc != NULL; cc++) *cc = cc[1];
+}
+#endif
+
 void initClock()
 {
 	iip::tz = getenv("TZ");
@@ -793,7 +811,7 @@ void setPathEnv(char *name, JSONNODE *n, bool isFolder = true)
 		
 		if(isFolder)
 		{
-			if(pstr.size()) if(pstr.at(u.size() - 1) != L'\\') pstr += (const wchar_t *)L"\\";
+			if(pstr.size()) if(pstr.at(pstr.size() - 1) != L'\\') pstr += (const wchar_t *)L"\\";
 		}
 		
 		size_t size = strlen(name);

@@ -39,6 +39,7 @@
 #include "PNGCompressor.h"
 #endif
 
+#include <mutex>
 
 // Define our http header cache max age (24 hours)
 #define MAX_AGE 86400

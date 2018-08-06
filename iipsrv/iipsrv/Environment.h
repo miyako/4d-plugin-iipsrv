@@ -38,9 +38,9 @@
 #define LIBMEMCACHED_SERVERS "localhost"
 #define LIBMEMCACHED_TIMEOUT 86400  // 24 hours
 #define INTERPOLATION 1  // 1: Bilinear
-#define CORS "";
-#define BASE_URL "";
-#define CACHE_CONTROL "max-age=86400"; // 24 hours
+#define CORS ""
+#define BASE_URL ""
+#define CACHE_CONTROL "max-age=86400" // 24 hours
 #define ALLOW_UPSCALING true
 #define URI_MAP ""
 #define EMBED_ICC true
@@ -57,7 +57,7 @@ class Environment {
  public:
 
 #if _WIN32
-	std::string getEnvUTF8(const wchar_t *env, const char *fallback){
+	static std::string getEnvUTF8(const wchar_t *env, const char *fallback){
 		wchar_t *envpara = _wgetenv(L"LOGFILE");
 		if(envpara)
 		{

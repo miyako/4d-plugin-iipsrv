@@ -72,6 +72,30 @@
     <ClCompile Include="4D Plugin API\Classes\ARRAY_TIME.cpp">
       <Filter>Source\4D Plugin API\Classes\ARRAY</Filter>
     </ClCompile>
+    <ClCompile Include="iipsrv\Watermark.cc" />
+    <ClCompile Include="iipsrv\Zoomify.cc" />
+    <ClCompile Include="iipsrv\CVT.cc" />
+    <ClCompile Include="iipsrv\DeepZoom.cc" />
+    <ClCompile Include="iipsrv\DSOImage.cc" />
+    <ClCompile Include="iipsrv\FIF.cc" />
+    <ClCompile Include="iipsrv\ICC.cc" />
+    <ClCompile Include="iipsrv\IIIF.cc" />
+    <ClCompile Include="iipsrv\IIPImage.cc" />
+    <ClCompile Include="iipsrv\IIPResponse.cc" />
+    <ClCompile Include="iipsrv\JPEGCompressor.cc" />
+    <ClCompile Include="iipsrv\JTL.cc" />
+    <ClCompile Include="iipsrv\OBJ.cc" />
+    <ClCompile Include="iipsrv\OpenJPEGImage.cc" />
+    <ClCompile Include="iipsrv\PFL.cc" />
+    <ClCompile Include="iipsrv\SPECTRA.cc" />
+    <ClCompile Include="iipsrv\Task.cc" />
+    <ClCompile Include="iipsrv\TIL.cc" />
+    <ClCompile Include="iipsrv\TileManager.cc" />
+    <ClCompile Include="iipsrv\TPTImage.cc" />
+    <ClCompile Include="iipsrv\Transforms.cc" />
+    <ClCompile Include="iipsrv\View.cc" />
+    <ClCompile Include="windows\Time.cc" />
+    <ClCompile Include="include\libjson_methods.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="4DPlugin.h">
@@ -140,6 +164,29 @@
     <ClInclude Include="4D Plugin API\Classes\ARRAY_TIME.h">
       <Filter>Source\4D Plugin API\Classes\ARRAY</Filter>
     </ClInclude>
+    <ClInclude Include="iipsrv\View.h" />
+    <ClInclude Include="iipsrv\Watermark.h" />
+    <ClInclude Include="iipsrv\Writer.h" />
+    <ClInclude Include="iipsrv\Cache.h" />
+    <ClInclude Include="iipsrv\Compressor.h" />
+    <ClInclude Include="iipsrv\DSOImage.h" />
+    <ClInclude Include="iipsrv\Environment.h" />
+    <ClInclude Include="iipsrv\IIPImage.h" />
+    <ClInclude Include="iipsrv\IIPResponse.h" />
+    <ClInclude Include="iipsrv\JPEGCompressor.h" />
+    <ClInclude Include="iipsrv\Memcached.h" />
+    <ClInclude Include="iipsrv\OpenJPEGImage.h" />
+    <ClInclude Include="iipsrv\RawTile.h" />
+    <ClInclude Include="iipsrv\Task.h" />
+    <ClInclude Include="iipsrv\TileManager.h" />
+    <ClInclude Include="iipsrv\Timer.h" />
+    <ClInclude Include="iipsrv\Tokenizer.h" />
+    <ClInclude Include="iipsrv\TPTImage.h" />
+    <ClInclude Include="iipsrv\Transforms.h" />
+    <ClInclude Include="iipsrv\URL.h" />
+    <ClInclude Include="windows\Time.h" />
+    <ClInclude Include="windows\MemcachedWindows.h" />
+    <ClInclude Include="include\libjson_methods.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="4D Plugin API\4DPluginAPI.def">

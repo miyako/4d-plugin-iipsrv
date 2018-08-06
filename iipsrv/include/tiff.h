@@ -75,6 +75,11 @@ typedef TIFF_INT32_T  int32;
 typedef TIFF_UINT32_T uint32;
 
 typedef TIFF_INT64_T  int64;
+
+#if _MSC_VER
+typedef unsigned long uint64;
+#endif
+
 typedef TIFF_UINT64_T uint64;
 
 /*

@@ -23,6 +23,7 @@
 #include "Environment.h"
 #include <cmath>
 #include <algorithm>
+#include <mutex>
 
 #undef CHUNKED 
 

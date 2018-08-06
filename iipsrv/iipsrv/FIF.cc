@@ -24,6 +24,7 @@
 #include "URL.h"
 #include "Environment.h"
 #include "TPTImage.h"
+#include <mutex>
 
 #ifdef HAVE_KAKADU
 #include "KakaduImage.h"
@@ -38,6 +39,7 @@
 
 #define MAXIMAGECACHE 1000  // Max number of items in image cache
 
+#include <mutex>
 
 using namespace std;
 

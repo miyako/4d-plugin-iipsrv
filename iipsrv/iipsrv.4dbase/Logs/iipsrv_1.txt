@@ -1,0 +1,2 @@
+1 2018-08-07 05:06:43 [IndexManager] INFO - インデックス on IMAGES.ID built in 0 ms
+2 2018-08-07 05:06:43 [IndexManager] INFO - インデックス on IMAGES.key built in 0 ms

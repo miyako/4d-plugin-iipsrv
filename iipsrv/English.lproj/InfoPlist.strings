@@ -1,1 +1,1 @@
-﻿/* Localized versions of Info.plist keys */CFBundleName = "iipsrv";CFBundleShortVersionString = "0.1";CFBundleGetInfoString = "iipsrv version 0.1, Copyright 2018 miyako.";
+/* Localized versions of Info.plist keys */CFBundleName = "iipsrv";CFBundleShortVersionString = "1.0";CFBundleGetInfoString = "iipsrv version 1.0, Copyright 2019 miyako.";

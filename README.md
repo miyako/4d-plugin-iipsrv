@@ -443,6 +443,18 @@ $options:=JSON Parse(IIPImage Get option)
 $cache:=JSON Parse(IIPImage Get cache info)
 ```
 
+## Building from source
+
+The macOS static libraries are not committed. Build them once before opening the Xcode project:
+
+```bash
+scripts/build-macos-deps.sh
+```
+
+This downloads pinned, checksummed releases of libjpeg 9c, libtiff 4.0.9, OpenJPEG 2.3.0 and libjson 7.6.1, which match the headers in `include/`. It builds each one universal (arm64 + x86_64, macOS 11.5) into `a/`. zlib comes from the macOS SDK. You need the Xcode command line tools and `cmake`. The release workflow runs the same script and caches the result.
+
+The Windows build still links the prebuilt libraries in `lib/x64`.
+
 ## Credits
 
 Based on [iipsrv](https://github.com/ruven/iipsrv) by Ruven Pillay (GPL v3), with libtiff, OpenJPEG, libjpeg, zlib and libjson.

@@ -23,6 +23,13 @@
 // Define mising time related functions on Windows and add round function for MSVC compiler
 #ifdef WIN32
 
+// struct timeval is declared by winsock; <Windows.h> only pulls winsock in
+// when WIN32_LEAN_AND_MEAN is not defined (C_TYPES.h defines it), so include
+// it explicitly. Skip it when winsock.h or winsock2.h is already in (both
+// declare timeval), since winsock2.h after winsock.h redefines symbols.
+#if !defined(_WINSOCKAPI_) && !defined(_WINSOCK2API_)
+#include <winsock2.h>
+#endif
 #include <Windows.h>
 
 struct timezone

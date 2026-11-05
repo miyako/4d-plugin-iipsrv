@@ -44,7 +44,9 @@ namespace iip
 
 namespace iip
 {
-	char *tz = NULL;
+	/* copy of the original TZ: the pointer getenv() returns may be invalidated by setenv() */
+	std::string tz;
+	bool tz_was_set = false;
 	Timer request_timer;
 
 	Cache *tileCache = NULL;
@@ -80,7 +82,9 @@ static void unsetenv(char *env_name) {
 
 void initClock()
 {
-	iip::tz = getenv("TZ");
+	const char *tz = getenv("TZ");
+	iip::tz_was_set = (tz != NULL);
+	iip::tz = tz ? tz : "";
 	setenv("TZ","",1);
 	tzset();
 	
@@ -90,8 +94,8 @@ void initClock()
 
 void resetClock()
 {
-	if(iip::tz) setenv("TZ", iip::tz, 1);
-	else unsetenv("TZ");
+	if(iip::tz_was_set) setenv("TZ", (char *)iip::tz.c_str(), 1);
+	else unsetenv((char *)"TZ");
 	tzset();
 }
 
@@ -190,17 +194,43 @@ void OnExit()
 
 void PluginMain(PA_long32 selector, PA_PluginParameters params)
 {
+	PA_long32 pProcNum = selector;
+	sLONG_PTR *pResult = (sLONG_PTR *)params->fResult;
+	PackagePtr pParams = (PackagePtr)params->fParameters;
+	
 	try
 	{
-		PA_long32 pProcNum = selector;
-		sLONG_PTR *pResult = (sLONG_PTR *)params->fResult;
-		PackagePtr pParams = (PackagePtr)params->fParameters;
-
 		CommandDispatcher(pProcNum, pResult, pParams); 
 	}
 	catch(...)
 	{
-
+		/* a command with a return value must always set it, even on failure */
+		try
+		{
+			switch(pProcNum)
+			{
+				case 1 :
+				case 7 :
+				{
+					C_BLOB returnValue;
+					returnValue.setReturn(pResult);
+				}
+					break;
+				case 2 :
+				case 3 :
+				case 5 :
+				case 6 :
+				{
+					C_TEXT returnValue;
+					returnValue.setReturn(pResult);
+				}
+					break;
+			}
+		}
+		catch(...)
+		{
+			
+		}
 	}
 }
 
@@ -308,7 +338,7 @@ std::string setSessionHeaders(Session *session,
 	
 	PA_long32 header_count = PA_GetArrayNbElements(*names);
 	
-	for(uint8_t i = 0; i <= header_count; ++i)
+	for(PA_long32 i = 0; i <= header_count; ++i)
 	{
 		PA_Unistring str = PA_GetStringInArray(*names, i);
 		CUTF8String name, value;
@@ -629,7 +659,10 @@ void IIPImage_Server(sLONG_PTR *pResult, PackagePtr pParams, bool key_only, bool
 	if(!key_only)
 	{
 		C_BLOB returnValue;/* http raw data */
-		returnValue.setBytes((const uint8_t *)&writer[0], writer.size());
+		if(!writer.empty())
+		{
+			returnValue.setBytes((const uint8_t *)writer.data(), (unsigned int)writer.size());
+		}
 		returnValue.setReturn(pResult);
 	}else
 	{
@@ -658,10 +691,14 @@ void IIPImage_Get_cache_info(sLONG_PTR *pResult, PackagePtr pParams)
 	{
 		std::lock_guard<std::mutex> guard(iip::tileCacheMutex);
 		
-		json_set_i_for_key(info, L"count", iip::tileCache->getNumElements());
-		json_set_f_for_key(info, L"size", iip::tileCache->getMemorySize());
-		json_set_f_for_key(info, L"maxSize", iip::tileCache->getMaxSize());
-		json_set_f_for_key(info, L"tileSize", iip::tileCache->getTileSize());
+		/* NULL if IIPImage SET OPTION cleared the cache since startCache() */
+		if(iip::tileCache)
+		{
+			json_set_i_for_key(info, L"count", iip::tileCache->getNumElements());
+			json_set_f_for_key(info, L"size", iip::tileCache->getMemorySize());
+			json_set_f_for_key(info, L"maxSize", iip::tileCache->getMaxSize());
+			json_set_f_for_key(info, L"tileSize", iip::tileCache->getTileSize());
+		}
 	}
 
 	JSONNODE *objects = json_new(JSON_ARRAY);
@@ -670,7 +707,7 @@ void IIPImage_Get_cache_info(sLONG_PTR *pResult, PackagePtr pParams)
 	{
 		std::lock_guard<std::mutex> guard(iip::imageCacheMutex);
 		
-		for(auto i = iip::imageCache->begin(); i != iip::imageCache->end();++i)
+		if(iip::imageCache) for(auto i = iip::imageCache->begin(); i != iip::imageCache->end();++i)
 		{
 			JSONNODE *object = json_new(JSON_NODE);
 			json_set_s_for_key(object, L"key", i->first.c_str());
@@ -699,7 +736,7 @@ void Convert_time_rfc_to_iso(sLONG_PTR *pResult, PackagePtr pParams)
 	
 	Param1.fromParamAtIndex(pParams, 1);
 	
-	tm mod_t;
+	tm mod_t = {};
 	time_t t;
 	
 	CUTF8String u8;
@@ -726,10 +763,10 @@ void setIntEnv(char *name, JSONNODE *n)
 	std::vector<char>buf(100);
 	json_int_t value = json_as_int(n);
 #if _WIN32
-	sprintf_s((char *)&buf[0], 100, "%I64u", value);
+	sprintf_s((char *)&buf[0], buf.size(), "%I64u", value);
 	_putenv_s(name, (const char *)std::string(&buf[0]).c_str());
 #else
-	sprintf((char *)&buf[0], "%llu", value);
+	snprintf((char *)&buf[0], buf.size(), "%llu", (unsigned long long)value);
 	setenv(name, (const char *)std::string(&buf[0]).c_str(), 1);
 #endif
 }
@@ -738,11 +775,11 @@ void setFloatEnv(char *name, JSONNODE *n)
 {
 	std::vector<char>buf(100);
 	json_number value = json_as_float(n);
+	/* %.17g round-trips any double in at most ~25 characters (atof/atoi read it back) */
+	snprintf((char *)&buf[0], buf.size(), "%.17g", (double)value);
 #if _WIN32
-	sprintf_s((char *)&buf[0], 100, "%16.16lf", value);
 	_putenv_s(name, (const char *)std::string(&buf[0]).c_str());
 #else
-	sprintf((char *)&buf[0], "%16.16lf", value);
 	setenv(name, (const char *)std::string(&buf[0]).c_str(), 1);
 #endif
 }
@@ -786,8 +823,11 @@ void setStringEnv(char *name, JSONNODE *n)
 																								true);
 			if(str)
 			{
-				std::string pstr = [str UTF8String];
-				setenv(name, pstr.c_str(), 1);
+				const char *u8 = [(NSString *)str UTF8String];
+				if(u8)
+				{
+					setenv(name, u8, 1);
+				}
 				CFRelease(str);
 			}
 #endif
@@ -849,7 +889,8 @@ void setPathEnv(char *name, JSONNODE *n, bool isFolder = true)
 			 NSString *path = (NSString *)CFURLCopyFileSystemPath((CFURLRef)u, kCFURLPOSIXPathStyle);
 			 if(path)/* the trailing separator is removed here */
 			 {
-				 std::string pstr = [path UTF8String];
+				 const char *u8 = [path UTF8String];
+				 std::string pstr = u8 ? u8 : "";
 				 if(isFolder)
 				 {
 					 if(pstr.size()) if(pstr.at(pstr.size() - 1) != '/') pstr += (const char *)"/";

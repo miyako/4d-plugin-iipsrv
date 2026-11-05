@@ -31,8 +31,8 @@ void outData_printf(std::vector<uint8_t> *writer, const char *str)
 {
 	if(str)
 	{
-		std::string src = str;
-		size_t len = src.length();
+		size_t len = strlen(str);
+		if(!len) return; /* writer->at(originalSize) throws out_of_range when nothing is appended */
 		size_t originalSize = writer->size();
 		writer->resize(originalSize + len);
 		void *dst = &writer->at(originalSize);
@@ -42,7 +42,7 @@ void outData_printf(std::vector<uint8_t> *writer, const char *str)
 
 void outData_putStr(std::vector<uint8_t> *writer, const char *str, size_t len)
 {
-	if(str)
+	if(str && len) /* writer->at(originalSize) throws out_of_range when len is 0 */
 	{
 		size_t originalSize = writer->size();
 		writer->resize(originalSize + len);

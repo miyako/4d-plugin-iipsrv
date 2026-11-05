@@ -495,11 +495,15 @@ strptime (const char *buf, const char *fmt, struct tm *timeptr)
 }
 
 
-/* Missing round() function in MS VC++
+/* Missing round() function in MS VC++ before VS2015 (_MSC_VER 1900),
+   matching the declaration guard in Time.h. Newer CRTs provide round(),
+   and redefining it fails under /GL (C2268, LNK1257).
  */
+#if _MSC_VER<1900
 double round(double r) {
   return (r > 0.0) ? floor(r + 0.5) : ceil(r - 0.5);
 }
+#endif
 
 
 #endif /* WIN32 */

@@ -1,0 +1,6 @@
+.DS_Store
+build/
+*.4dbase/Logs/
+*.4dbase/userPreferences.*/
+iipsrv.4dbase/Plugins/iipsrv.bundle/Contents/MacOS/
+iipsrv.4dbase/Plugins/iipsrv.bundle/Contents/_CodeSignature/
